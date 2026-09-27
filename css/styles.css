@@ -337,13 +337,23 @@ ul { margin: 0; padding: 0; list-style: none; }
 .pika {
   position: relative;
   width: clamp(88px, min(50vw, calc(var(--vh) * .22)), 250px);
-  aspect-ratio: 260 / 300;
+  aspect-ratio: 91 / 109.3;
   border: 0;
   padding: 0;
   background: none;
   flex: 0 0 auto;
 }
-.pika__svg { width: 100%; height: 100%; overflow: visible; animation: hop 2.6s ease-in-out infinite; transform-origin: 50% 100%; }
+.pika__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  animation: hop 2.6s ease-in-out infinite;
+  transform-origin: 50% 100%;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+  pointer-events: none;
+}
 .pika__shadow {
   position: absolute;
   left: 50%; bottom: -4%;
@@ -354,16 +364,32 @@ ul { margin: 0; padding: 0; list-style: none; }
   animation: shadow 2.6s ease-in-out infinite;
   z-index: -1;
 }
-.pika__ear { transform-box: fill-box; transform-origin: 85% 95%; animation: ear 3.4s ease-in-out infinite; }
-.pika__ear--r { animation-delay: .25s; }
-.pika__tail { transform-box: fill-box; transform-origin: 0% 100%; animation: tail 1.6s ease-in-out infinite; }
-.pika__eyes { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
-.pika__zap { opacity: 0; }
-.pika__wave { transform-box: fill-box; transform-origin: 100% 90%; animation: wave 2.2s ease-in-out infinite; }
-.pika__cheek { transform-box: fill-box; transform-origin: center; }
+.pika__zap {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  opacity: 0;
+  pointer-events: none;
+}
+/* Mejillas: posiciones medidas sobre assets/pikachu.min.svg */
+.pika__glow {
+  position: absolute;
+  top: 55%;
+  width: 16%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  transform: translate(-50%, -50%) scale(.6);
+  background: radial-gradient(circle, rgba(255, 243, 107, .95) 0 30%, rgba(255, 214, 36, .55) 55%, transparent 72%);
+  opacity: 0;
+  pointer-events: none;
+}
+.pika__glow--l { left: 45.9%; }
+.pika__glow--r { left: 81.4%; }
 .pika__bubble {
   position: absolute;
-  bottom: 88%; left: 58%;
+  bottom: 74%; left: 74%;
   font-family: var(--font-display);
   font-size: clamp(.8rem, 3.8vw, 1.15rem);
   color: var(--navy);
@@ -389,8 +415,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 }
 .pika.is-zap .pika__bubble { opacity: 1; transform: scale(1) rotate(6deg); }
 .pika.is-zap .pika__zap { animation: zap .9s steps(2, jump-none) 1; }
-.pika.is-zap .pika__cheek { animation: cheek .9s ease 1; }
-.pika.is-zap .pika__svg { animation: jump .6s var(--ease-bounce) 1; }
+.pika.is-zap .pika__glow { animation: glowcheek .9s ease 1; }
+.pika.is-zap .pika__img { animation: jump .6s var(--ease-bounce) 1; }
 
 .hero__cta { display: flex; flex-direction: column; align-items: center; gap: clamp(8px, calc(var(--vh) * .016), 16px); width: 100%; }
 .hero__lead {
@@ -920,12 +946,8 @@ ul { margin: 0; padding: 0; list-style: none; }
 @keyframes twinkle { 0%, 100% { opacity: .2; scale: .7; } 50% { opacity: 1; scale: 1.1; } }
 @keyframes hop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6%); } }
 @keyframes shadow { 0%, 100% { transform: translateX(-50%) scale(1); opacity: 1; } 50% { transform: translateX(-50%) scale(.8); opacity: .6; } }
-@keyframes ear { 0%, 80%, 100% { transform: rotate(0); } 85% { transform: rotate(-9deg); } 90% { transform: rotate(4deg); } }
-@keyframes wave { 0%, 55%, 100% { transform: rotate(0); } 65% { transform: rotate(14deg); } 75% { transform: rotate(-6deg); } 85% { transform: rotate(12deg); } }
-@keyframes tail { 50% { transform: rotate(6deg); } }
-@keyframes blink { 0%, 92%, 100% { transform: scaleY(1); } 95% { transform: scaleY(.1); } }
 @keyframes zap { 0% { opacity: 0; } 20%, 80% { opacity: 1; } 100% { opacity: 0; } }
-@keyframes cheek { 30%, 70% { fill: #FF6A3D; transform: scale(1.15); } }
+@keyframes glowcheek { 30%, 70% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); } }
 @keyframes jump { 0% { transform: translateY(0) scale(1, 1); } 30% { transform: translateY(0) scale(1.08, .9); } 60% { transform: translateY(-14%) scale(.95, 1.06); } 100% { transform: translateY(0) scale(1); } }
 @keyframes scrollcue { 0% { transform: translateY(0); opacity: 1; } 80% { transform: translateY(14px); opacity: 0; } 100% { opacity: 0; } }
 @keyframes nudge { 50% { transform: translateY(3px); } }

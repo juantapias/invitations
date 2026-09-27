@@ -91,3 +91,8 @@ El evento incluye recordatorios 1 día y 2 horas antes.
 `_headers` (Netlify) y `vercel.json` (Vercel) hacen que `evento.ics` se abra directamente en el calendario. GitHub Pages ya lo sirve así sin configuración.
 
 > Si el invitado abre el enlace desde Instagram o Facebook, esos navegadores internos no abren el calendario del iPhone. En ese caso la invitación usa Google Calendar y le sugiere abrirla en Safari.
+
+## Borrar respuestas de prueba
+
+- **Google Sheets**: en la pestaña "Respuestas", selecciona desde la fila 2 hasta la última, haz clic derecho y elige **Borrar filas**. No borres la fila 1 (encabezados).
+- **Navegador / modo demo**: abre la invitación agregando `?reset=1` al final del enlace (ej. `https://tu-sitio.com/?reset=1`). Hazlo en cada teléfono o computador donde hiciste pruebas.

@@ -501,7 +501,22 @@
   }
 
   // ---------- Init ----------
+  // ?reset=1 borra las respuestas de prueba guardadas en este navegador
+  function resetLocal() {
+    if (params.get('reset') !== '1') return false;
+    try {
+      localStorage.removeItem(STORE_KEY);
+      localStorage.removeItem('pika-demo-db');
+      sessionStorage.removeItem('pika-admin-key');
+    } catch (_) {}
+    params.delete('reset');
+    const q = params.toString();
+    location.replace(location.pathname + (q ? '?' + q : '') + location.hash);
+    return true;
+  }
+
   function init() {
+    if (resetLocal()) return;
     bind();
     intro();
     pikachu();
