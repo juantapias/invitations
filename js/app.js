@@ -61,6 +61,7 @@
       lugarDireccion: CFG.lugar.direccion,
       vestimenta: CFG.vestimenta,
       limite: limite ? fmtFechaCorta.format(limite) : '',
+      notaHora: CFG.notaHora || '',
     };
     $$('[data-bind]').forEach((el) => {
       const k = el.dataset.bind;
@@ -69,6 +70,7 @@
 
     if (!CFG.vestimenta) $('#rowVestimenta').hidden = true;
     if (!limite) $('#rowLimite').hidden = true;
+    if (!CFG.notaHora) $('#notaHora').hidden = true;
 
     const name = $('.hero__name');
     const len = String(CFG.festejado).length;
@@ -301,7 +303,6 @@
     const submit = $('#btnSubmit');
     const errBox = $('#formError');
     let personas = 1;
-    let calendarOpened = false;
 
     $('#personasHint').textContent = cupos === 1 ? 'Esta invitación es para 1 persona.' : `Esta invitación es para máximo ${cupos} personas.`;
 
@@ -385,16 +386,14 @@
         cupos,
       };
 
-      // El calendario se abre dentro del gesto del usuario (si no, el navegador lo bloquea)
-      if (asiste && !(prev && prev.asiste) && !calendarOpened) {
-        calendarOpened = Cal.add();
-      }
-
       setLoading(true);
       try {
         await Api.enviar(payload);
-        store.set(payload);
-        showDone(payload, true);
+        const nuevoSi = asiste && !(prev && prev.asiste);
+        store.set({ ...payload, cal: asiste && prev && prev.cal });
+        showDone(store.get(), true);
+        // En iPhone/Mac el calendario se abre solo (hoja nativa "Añadir"); en Android basta un toque
+        if (nuevoSi && Cal.canAutoOpen()) setTimeout(openCalendar, 1200);
         window.dispatchEvent(new Event('pika:rsvp'));
         if (Api.isDemo()) toast('Modo demo: guardado en este navegador');
       } catch (err) {
@@ -421,9 +420,7 @@
         const quien = data.personas === 1 ? '<strong>1 persona</strong>' : `<strong>${data.personas} personas</strong>`;
         $('#doneText').innerHTML = `Confirmaste ${quien}. ¡Te esperamos el <strong>${fmtFecha.format(inicio)}</strong> a las <strong>${fmtHora.format(inicio)}</strong>!`;
         $('#doneCal').hidden = false;
-        const p = Cal.platform();
-        $('#btnCalMain span').textContent =
-          p === 'ios' || p === 'mac' ? 'Guardar en Calendario' : 'Guardar en Google Calendar';
+        setCalState(!!data.cal);
         if (fresh) {
           confetti();
           vibrate([50, 50, 120]);
@@ -443,8 +440,34 @@
       }
     }
 
-    $('#btnCalMain').addEventListener('click', () => Cal.add());
-    $('#btnCalApple').addEventListener('click', () => Cal.downloadIcs());
+    function setCalState(saved) {
+      const btn = $('#btnCalMain');
+      btn.classList.toggle('btn--pulse', !saved);
+      btn.classList.toggle('is-saved', saved);
+      $('#btnCalMain span').textContent = saved ? '¡Listo! Abrir de nuevo' : Cal.mainLabel();
+      $('#calHint').textContent = saved
+        ? '¿No se guardó? Toca el botón otra vez o prueba con otro calendario abajo.'
+        : Cal.hint();
+      $('#calStep').hidden = saved;
+    }
+
+    function markCalSaved() {
+      const cur = store.get();
+      if (cur) store.set({ ...cur, cal: true });
+      setTimeout(() => setCalState(true), 600);
+    }
+
+    function openCalendar() {
+      Cal.add();
+      markCalSaved();
+    }
+
+    $('#btnCalMain').addEventListener('click', openCalendar);
+    $('#btnCalApple').addEventListener('click', () => {
+      Cal.openApple();
+      markCalSaved();
+    });
+    $('#btnCalGoogle').addEventListener('click', markCalSaved);
 
     $('#btnChange').addEventListener('click', () => {
       const prev = store.get();

@@ -177,7 +177,10 @@
         </a>
       </div>
 
-      <a class="hero__scroll" href="#cuenta" aria-label="Ver detalles"><span></span></a>
+      <a class="hero__scroll" href="#cuenta">
+        <span class="hero__mouse" aria-hidden="true"><span></span></span>
+        <span class="hero__scroll-lbl">Desliza para ver más <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+      </a>
 
       <svg class="hero__hills" viewBox="0 0 400 60" preserveAspectRatio="none" aria-hidden="true">
         <path d="M0 34C60 8 110 8 170 26s120 26 230-8V60H0z" fill="#8BD45E"/>
@@ -219,7 +222,7 @@
           </li>
           <li class="details__row">
             <span class="details__icon"><svg><use href="#i-clock"/></svg></span>
-            <div><span class="details__lbl">Hora</span><strong class="details__val" data-bind="hora"></strong></div>
+            <div><span class="details__lbl">Hora</span><strong class="details__val" data-bind="hora"></strong><span class="details__note" id="notaHora"><svg aria-hidden="true"><use href="#i-alarm"/></svg><span data-bind="notaHora"></span></span></div>
           </li>
           <li class="details__row">
             <span class="details__icon"><svg><use href="#i-pin"/></svg></span>
@@ -315,7 +318,7 @@
             </button>
             <p class="form__note" id="calNote" hidden>
               <svg><use href="#i-cal"/></svg>
-              <span>Al confirmar, se abrirá tu calendario para guardar el evento.</span>
+              <span>Después de confirmar podrás guardarlo en tu calendario con un toque.</span>
             </p>
             <p class="form__error" id="formError" role="alert" hidden></p>
           </form>
@@ -327,13 +330,18 @@
             <p class="done__text" id="doneText"></p>
 
             <div class="done__cal" id="doneCal" hidden>
-              <button class="btn btn--primary btn--block" type="button" id="btnCalMain">
-                <svg class="btn__icon"><use href="#i-cal"/></svg><span>Agregar a mi calendario</span>
+              <p class="done__step" id="calStep"><svg aria-hidden="true"><use href="#i-cal"/></svg> Último paso: guárdalo en tu calendario</p>
+              <button class="btn btn--primary btn--block btn--lg btn--pulse" type="button" id="btnCalMain">
+                <svg class="btn__icon"><use href="#i-cal"/></svg><span>Guardar en mi calendario</span>
               </button>
-              <div class="done__cal-alt">
-                <a class="chip" id="btnCalGoogle" target="_blank" rel="noopener">Google Calendar</a>
-                <button class="chip" type="button" id="btnCalApple">Apple / Outlook (.ics)</button>
-              </div>
+              <p class="done__hint" id="calHint"></p>
+              <details class="done__more">
+                <summary>¿Usas otro calendario?</summary>
+                <div class="done__cal-alt">
+                  <a class="chip" id="btnCalGoogle" target="_blank" rel="noopener">Google Calendar</a>
+                  <button class="chip" type="button" id="btnCalApple">Apple / Outlook</button>
+                </div>
+              </details>
             </div>
 
             <button class="link-btn" type="button" id="btnChange">Cambiar mi respuesta</button>

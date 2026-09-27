@@ -8,6 +8,8 @@ Invitación de cumpleaños dinámica con temática de Pikachu, pensada para celu
 index.html          Invitación
 admin.html          Panel de invitados (quién asiste / quién no / total de personas)
 js/config.js        ← Aquí se edita TODO: nombre, edad, fecha, lugar, etc.
+evento.ics          Evento de calendario (se genera con scripts/generar-ics.mjs)
+scripts/            Utilidades
 js/app.js           Lógica de la invitación
 js/calendar.js      Google Calendar + archivo .ics (Apple / Outlook)
 js/api.js           Envío de respuestas
@@ -18,6 +20,14 @@ apps-script/Code.gs Backend gratis con Google Sheets
 
 Edita `js/config.js`. Lo mínimo es cambiar `festejado`, `edad`, `inicio`, `fin`, `fechaLimite` y `lugar`.
 Para que el mapa sea exacto, pon `lat` y `lng`: en Google Maps, clic derecho sobre el lugar → copia las coordenadas.
+
+**Importante:** cada vez que cambies la fecha, la hora o el lugar, vuelve a generar el archivo del calendario:
+
+```bash
+node scripts/generar-ics.mjs
+```
+
+Cuando ya tengas el enlace final, ponlo en `urlPublica` y vuelve a ejecutar el comando. Así el evento guardado en el calendario incluye el enlace a la invitación.
 
 ## 2. Conectar Google Sheets (guardar las respuestas)
 
@@ -68,8 +78,16 @@ También puedes ver todo directamente en la hoja de Google Sheets.
 
 ## Sobre el calendario
 
-Por seguridad, ningún sitio web puede escribir en el calendario del teléfono sin que la persona lo acepte. Por eso, justo al tocar **Enviar respuesta** con "Sí", la invitación abre la ventana nativa de "Agregar evento" y el invitado solo tiene que tocar una vez para guardarlo:
-- **iPhone / Mac** → Apple Calendar (archivo `.ics`, con recordatorios 1 día y 2 horas antes).
-- **Android / otros** → Google Calendar.
+Por seguridad, ningún sitio web puede escribir en el calendario de un teléfono sin que la persona lo acepte. La invitación reduce el proceso a un solo toque:
 
-Si el navegador bloquea la ventana, la pantalla de confirmación muestra los botones de Google Calendar y de Apple/Outlook.
+1. El invitado confirma que asiste.
+2. Aparece el recuadro **"Último paso: guárdalo en tu calendario"**:
+   - **iPhone / Mac**: se abre **automáticamente** la ventana nativa del Calendario (usa `evento.ics`, sin descargas). Solo hay que tocar **«Añadir»**.
+   - **Android**: un toque en **"Guardar en mi calendario"** abre Google Calendar con todo lleno. Solo hay que tocar **«Guardar»**.
+3. En **"¿Usas otro calendario?"** hay otras opciones (Google, Apple u Outlook).
+
+El evento incluye recordatorios 1 día y 2 horas antes.
+
+`_headers` (Netlify) y `vercel.json` (Vercel) hacen que `evento.ics` se abra directamente en el calendario. GitHub Pages ya lo sirve así sin configuración.
+
+> Si el invitado abre el enlace desde Instagram o Facebook, esos navegadores internos no abren el calendario del iPhone. En ese caso la invitación usa Google Calendar y le sugiere abrirla en Safari.

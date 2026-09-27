@@ -8,13 +8,15 @@ window.INVITACION = {
   edad: 6,
   frase: '¡Te elijo a ti!',
   mensaje:
-    'Prepárate para una aventura eléctrica llena de juegos, pastel y muchos Pokémon. ¡Tu presencia hará este día súper efectivo!',
+    'Prepárate para una aventura eléctrica llena de juegos, pastel y muchas sorpresas. ¡Me encantaría celebrar contigo!',
 
   inicio: '2026-10-25T14:00:00-05:00',
   fin: '2026-10-25T19:00:00-05:00',
   zonaHoraria: 'America/Bogota',
+  // Nota que aparece debajo de la hora (déjala en '' para ocultarla)
+  notaHora: 'Nota: por favor, ser puntuales.',
   // Después de esta fecha el formulario se cierra (déjalo en '' para no cerrarlo nunca)
-  fechaLimite: '2026-10-20T23:59:00-05:00',
+  fechaLimite: '2026-10-12T23:59:00-05:00',
 
   lugar: {
     nombre: 'Alto Jardín · Salón social',
@@ -34,6 +36,9 @@ window.INVITACION = {
 
   // Opcional: WhatsApp de contacto con código de país, sin + ni espacios. Déjalo en '' para ocultarlo.
   contacto: { nombre: 'los papás de Benjamín', whatsapp: '' },
+
+  // Enlace final de la invitación cuando la publiques (aparece dentro del evento del calendario)
+  urlPublica: '',
 
   // URL del Web App de Google Apps Script (ver README). Vacío = modo demo (se guarda solo en este navegador).
   apiUrl:

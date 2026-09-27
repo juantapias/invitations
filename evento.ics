@@ -1,0 +1,27 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Invitacion Pikachu//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Cumpleaños de Benjamín ⚡
+BEGIN:VEVENT
+UID:cumple-benjamin-20261025t190000z@invitacion-pikachu
+DTSTAMP:20260927T184044Z
+DTSTART:20261025T190000Z
+DTEND:20261026T000000Z
+SUMMARY:Cumpleaños de Benjamín ⚡
+DESCRIPTION:¡Benjamín cumple 6! ¡Te elijo a ti!\nNota: por favor\, ser p
+ untuales.
+LOCATION:Alto Jardín · Salón social\, Calle 50B #98-65
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Mañana es el cumpleaños de Benjamín
+TRIGGER:-P1D
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:En 2 horas: cumpleaños de Benjamín
+TRIGGER:-PT2H
+END:VALARM
+END:VEVENT
+END:VCALENDAR
