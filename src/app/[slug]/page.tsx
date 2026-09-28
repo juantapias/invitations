@@ -4,7 +4,7 @@ import { googleCalendarUrl, mapsQuery } from '@/lib/calendar';
 import { formatLongDate, formatShortDate, formatTime } from '@/lib/dates';
 import { getInvite, getPublicEvent, inviteUrl } from '@/lib/events';
 import ThemeRenderer from '@/themes/render';
-import { getThemeMeta } from '@/themes/registry';
+import { getThemeMeta, themeIcons } from '@/themes/registry';
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -29,6 +29,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title,
     description,
     robots: { index: false, follow: false },
+    icons: themeIcons(event.theme),
     openGraph: { title: `⚡ ${title}`, description, type: 'website' },
   };
 }

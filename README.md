@@ -137,7 +137,8 @@ Cada tema es una carpeta en `src/themes/<id>/` y solo se encarga del diseño. La
 4. **`styles.css`:**
    - Escribe todo bajo `.theme-<id>`, con variables en `html:has(.theme-<id>)` y animaciones con prefijo propio, así nunca choca con otros temas.
    - Si partes de un CSS sin aislar, `scripts/scope-theme-css.cjs` lo convierte.
-5. **Registra el tema** en `src/themes/registry.ts` (metadatos) y en `src/themes/render.tsx` (carga).
+5. **Íconos del tema** en `public/themes/<id>/`: `favicon.svg`, `favicon-32.png` y `apple-icon.png` (180×180 con fondo sólido). Se usan como favicon de la invitación y como ícono si la guardan en la pantalla de inicio del celular.
+6. **Registra el tema** en `src/themes/registry.ts` (metadatos) y en `src/themes/render.tsx` (carga).
    - Aparece solo en el selector del panel.
    - Cada invitación descarga únicamente el código y el CSS de su tema.
 

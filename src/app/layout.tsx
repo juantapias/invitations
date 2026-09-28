@@ -11,7 +11,14 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000'),
   title: { default: 'Invitaciones dinámicas · By Tapias', template: '%s' },
   description: 'Invitaciones digitales con confirmación de asistencia, calendario y mapa.',
-  icons: { icon: '/favicon.svg' },
+  // Ícono de la plataforma (portada, login y panel). Cada invitación usa el de su tema.
+  icons: {
+    icon: [
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon-32.png', sizes: '32x32', type: 'image/png' },
+    ],
+    apple: '/apple-icon.png',
+  },
 };
 
 export const viewport: Viewport = {
